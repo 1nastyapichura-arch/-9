@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ice Creamy — Майстерня натурального морозива</title>
+    <style>
+        /* Базові налаштування стилів */
+        :root {
+            --primary-color: #ff6b81;
+            --secondary-color: #ff4757;
+            --text-color: #2f3542;
+            --bg-light: #f1f2f6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: var(--text-color);
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* Шапка сайту (Меню) */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 25px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Головний банер (Обкладинка) */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1501443712940-3de7704631a0?q=80&w=1920') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 20px;
+            margin-top: 60px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 129, 0.4);
+        }
+
+        /* Секція "Про нас" */
+        .section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 10px auto 0;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            font-size: 18px;
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+        }
+
+        /* Каталог товарів */
+        .catalog {
+            background-color: var(--bg-light);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .product-desc {
+            font-size: 14px;
+            color: #747d8c;
+            margin-bottom: 15px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        /* Кошик покупок */
+        .cart-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--secondary-color);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 999;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(255, 71, 87, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); }
+        }
+
+        /* Контакти та Футер */
+        footer {
+            background-color: #2f3542;
+            color: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .contact-info {
+            text-align: left;
+        }
+
+        /* Адаптивність для мобільних */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .hero-content h1 { font-size: 32px; }
+            .footer-content { flex-direction: column; text-align: center; }
+            .contact-info { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo">🍦 Ice Creamy</a>
+            <ul class="nav-menu">
+                <li><a href="#about">Про нас</a></li>
+                <li><a href="#catalog">Каталог</a></li>
+                <li><a href="#delivery">Доставка</a></li>
+                <li><a href="#contacts">Контакти</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Крафтове морозиво за італійськими рецептами</h1>
+            <p>Справжній вибух смаку з натуральних інгредієнтів. Замовляйте розфасоване морозиво з доставкою до дверей у Хмельницькому!</p>
+            <a href="#catalog" class="btn">Дивитись асортимент</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">Майстерня "Ice Creamy"</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Привіт! Мене звуть Світлана, я директор майстерні "Ice Creamy". Ми створюємо не просто десерти, а справжні гастрономічні шедеври за автентичними рецептами сонячної Італії.</p>
+                <p>У нас є кілька затишних магазинчиків по Хмельницькому, де ви завжди можете насолодитися свіжими хрусткими вафлями, ріжками та сендвічами. А для тих, хто бажає влаштувати свято вдома, ми запустили доставку розфасованого фірмового морозива.</p>
+                <p><strong>Головне про нашу доставку:</strong> ми перевозимо продукцію у спеціальних професійних термосумках, тому ваше замовлення гарантовано не розтане навіть у найспекотніший літній день!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalog" class="section catalog">
+        <h2 class="section-title">Наш Асортимент</h2>
+        <div class="grid">
+            
+            <div class="product-card">
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=500');"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Розфасоване морозиво (Джелато)</h3>
+                        <p class="product-desc">Класичне італійське вершкове морозиво у зручному сімейному пакуванні (500г).</p>
+                    </div>
+                    <div class="product-meta">
+                        <span class="price">180 ₴</span>
+                        <button class="btn" onclick="addToCart('Джелато')">Купити</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=500');"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Хрусткі Бельгійські Вафлі</h3>
+                        <p class="product-desc">Теплі фірмові вафлі з кульками морозива на ваш смак та топпінгом.</p>
+                    </div>
+                    <div class="product-meta">
+                        <span class="price">95 ₴</span>
+                        <button class="btn" onclick="addToCart('Вафлі')">Купити</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1507750549272-e56324136174?q=80&w=500');"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Класичний Ріжок</h3>
+                        <p class="product-desc">Хрусткий вафельний ріжок з асорті з трьох фірмових кульок морозива.</p>
+                    </div>
+                    <div class="product-meta">
+                        <span class="price">65 ₴</span>
+                        <button class="btn" onclick="addToCart('Ріжок')">Купити</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-img" style="background-image: url('https://images.unsplash.com/photo-1549396565-c41940984da0?q=80&w=500');"></div>
+                <div class="product-info">
+                    <div>
+                        <h3 class="product-title">Айс-Сендвіч</h3>
+                        <p class="product-desc">Ніжне печиво з товстим прошарком шоколадного та ванільного пломбіру.</p>
+                    </div>
+                    <div class="product-meta">
+                        <span class="price">80 ₴</span>
+                        <button class="btn" onclick="addToCart('Сендвіч')">Купити</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="delivery" class="section">
+        <h2 class="section-title">Правила доставки</h2>
+        <div style="text-align: center; max-width: 800px; margin: 0 auto; font-size: 18px;">
+            <p>Наразі ми доставляємо замовлення <strong>виключно в межах міста Хмельницький</strong>.</p>
+            <p style="margin-top: 15px;">Заявки обробляються щодня з 09:00 до 21:00. Кур'єр приїде до вас протягом 45 хвилин після підтвердження замовлення.</p>
+        </div>
+    </section>
+
+    <div class="cart-widget" id="cart" onclick="checkout()">
+        🛒 <span id="cart-count" style="margin-left: 5px;">0</span>
+    </div>
+
+    <footer id="contacts">
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>Контакти майстерні</h3>
+                <p style="margin-top: 10px;">📍 м. Хмельницький, вул. Проскурівська, 24</p>
+                <p>📞 +38 (067) 123-45-67</p>
+                <p>✉️ info@icecreamy.khm.ua</p>
+            </div>
+            <div>
+                <p>&copy; <span class="js-current-year"></span> Ice Creamy. Усі права захищено.</p>
+                <p style="font-size: 12px; color: #747d8c; margin-top: 5px;">Практична робота з Веб-технологій</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let count = 0;
+        const items = [];
+
+        function addToCart(itemName) {
+            count++;
+            items.push(itemName);
+            document.getElementById('cart-count').innerText = count;
+            alert(`🍧 Товар "${itemName}" додано до кошика!`);
+        }
+
+        function checkout() {
+            if(count === 0) {
+                alert("Ваш кошик порожній. Оберіть смачненьке морозиво!");
+            } else {
+                alert(`Оформлення замовлення!\nУ кошику товарів: ${count}\nСклад: ${items.join(', ')}\n\nДякуємо! Кур'єр у Хмельницькому вже готує термосумку.`);
+                count = 0;
+                items.length = 0;
+                document.getElementById('cart-count').innerText = count;
+            }
+        }
+
+        // Автоматичне встановлення року
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector(".js-current-year").innerText = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
